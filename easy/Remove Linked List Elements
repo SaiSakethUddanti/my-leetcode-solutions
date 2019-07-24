@@ -1,0 +1,26 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if(head == null) return head;   //base case. when there are no nodes
+        ListNode ptr = head;    //head points to list. ptr is for temporary iteration and deletion so that final result is we return 'head', the edited list
+        while(ptr.next!=null)   //runs till last but one node since last node's next points to null. now, check if the adjacent node has val. if so delete, else move ptr
+        {
+            if(ptr.next.val == val)     
+                ptr.next = ptr.next.next;
+            else
+                ptr = ptr.next;
+        }
+        //now,we removed 'val' nodes. now we have to return the head. what if head itself has the val? so,
+        if(head.val == val)
+            return head.next;
+        else
+            return head;
+    }
+}

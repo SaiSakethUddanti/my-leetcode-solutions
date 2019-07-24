@@ -1,0 +1,21 @@
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        //new int result[] = new int[m+n];
+        int i=0,j=0;
+        while(i<m && j<n)
+        {
+           if(nums1[i]<=nums2[j])
+            i++;
+           else if(nums1[i] > nums2[j])
+           {
+              int temp = nums1[i]; 
+               nums1[i]=nums2[j];
+               nums2[j] = temp;
+                i++; 
+               Arrays.sort(nums2);
+           }
+        }
+        //exits at end of nums1 array. now nums1, nums2 are sorted. just append nums2 at end of nums1.
+        System.arraycopy(nums2,0,nums1,nums1.length-nums2.length,nums2.length);
+    }
+}

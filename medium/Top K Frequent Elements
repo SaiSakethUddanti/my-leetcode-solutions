@@ -1,0 +1,38 @@
+class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<nums.length;i++)
+        {
+            if(map.containsKey(nums[i]))
+                map.put(nums[i],map.get(nums[i])+1);
+            else
+                map.put(nums[i],1);
+        }
+        System.out.println(map.keySet());
+        PriorityQueue<Integer> heap = new PriorityQueue<Integer>(new Comparator<Integer>()
+        {
+            @Override
+            public int compare(Integer a,Integer b)
+            {
+                return map.get(a)-map.get(b);
+            }
+        });
+        for(int i : map.keySet())
+        {
+            heap.add(i);
+            if(heap.size()>k)
+            {
+                System.out.println(heap.poll());
+            }
+        }
+        List<Integer> result = new LinkedList();
+        while(!heap.isEmpty())
+        {
+            result.add(heap.poll());
+        }
+        Collections.reverse(result);
+        
+        return result;
+                   
+    }
+}

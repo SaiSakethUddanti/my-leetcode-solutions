@@ -1,0 +1,51 @@
+class Solution {
+    public String longestPalindrome(String s) {
+        char[] T = new char[(s.length()*2)+3]; //size of array = length of string + #'s in between each character of string + 2 #'s on either side + 1 ''$' marking start of string + an ''@' to mark end of string.
+          
+        T[0] = '$';
+        T[1] = '#';
+        T[T.length-1] = '@';
+        for(int i=0;i<s.length();i++)
+        {
+            T[(i*2)+2] = s.charAt(i);  //2,4,6,8...indices of the array will have chars of the string
+            T[((i*2)+2)+1] = '#';
+        }               //array will look something like $ # x # x # x #....# @
+        
+        
+        int[] P = new int[T.length+1]; 
+        int c = 0;  //points to the center of the main palindrome
+        int r = 0 ;  //points to the right boundary of the main palindrome
+        int lmax = 0;
+        int left = 0;
+        for(int i = 2; i<T.length-2;i++) //from 1st # to last #
+        {
+            //algorithm 
+            //step1: get the mirror point of current element
+            int mirr = 2*c - i;
+            
+            //2. check if i is WITHIN the boundary of the main palindrome, 
+            if(i<r)        
+                P[i] = Math.min(r-i , P[mirr]);     // //if yes, copy the length of the palindrome with mirror as center
+                
+            //3. keep expanding around the element if the pattern matches
+            while (T[i-P[i]-1] == T[i+P[i]+1])  //if i=5, checks elements in indices 4 and 6 if they are equal, and if so, keeps expanding
+                P[i]++;
+            
+            //4. if palindrome with center 'i' is expanding beyond the right boundary of the main palindrome, we found a new longer palindrome, so we update c and r.
+            if(i+P[i]>r || i>r)    //if right boundary of new expanded element>current boundary
+            {
+                c = i;
+                r = i+P[i];
+            }   
+            
+             //we got the array with all the length of palindromes with relative eles as centers. now we need the palindrome. hence, using lmin,lmax variables to get the substring.
+            while(P[i]>lmax)
+            {
+                left = (i-P[i])/2;
+                lmax = P[i];    //gives the length of the longest palindrome 
+            }
+        //now we have start and end of the longest palindrome. we return it as a string
+        }
+        return s.substring(left, left+lmax);
+    }
+}

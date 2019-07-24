@@ -1,0 +1,31 @@
+class Solution {
+    public void rotate(int[] nums, int k) {
+        
+        if(nums.length == 0 || nums.length == 1)return;
+        
+        List<Integer> l=new ArrayList<Integer>();
+        
+        if(nums.length < k){
+            k = k% nums.length;
+        }
+        
+        int id = nums.length-k-1;
+        
+        
+        System.out.println(k);
+        for(int i=0;i<=id;i++)
+        {
+            l.add(nums[i]);
+        }
+        
+        for(int j=nums.length-1;j>=nums.length-k && j>=0 ;j--)
+        {
+            // System.out.println(nums[j]);
+            l.add(0,nums[j]);
+        }
+        for(int i = 0;i<nums.length;i++){
+            nums[i]= l.get(i);
+        }
+        // System.out.println(l);
+    }
+}

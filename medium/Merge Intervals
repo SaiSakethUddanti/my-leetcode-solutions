@@ -1,0 +1,45 @@
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        
+        if(intervals.length==0)
+            return intervals;
+        
+    //here, we are using lambda comparator, so that we need not use 2 new arrays to store sorted starting times and ending times respectively.
+        Arrays.sort(intervals, new Comparator<int []>()
+        {
+            @Override
+            //we return an integer,not array element; based on +ve, -ve value of the comparison. 
+            public int compare(int[] a,int[] b)
+            {
+             return a[0]-b[0];    //compares column wise. like [0][0],[1][0] comparions and [0][1],[1][1]           
+            }
+        });
+        
+    //we mark 1st interval as start and end; then we keep updating them and adding them to result.
+        
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+        
+        //now compare starting times with 'end' and see if we can merge the current interval with previous 
+        List<int[]> result = new ArrayList<>(); //to store the final merged intervals
+        for(int i=1;i<intervals.length;i++)
+        {
+            if(intervals[i][0]<=end)
+            {
+               end = Math.max(end,intervals[i][1]);
+            }
+            else       //when starting time of the current interval > current end: means unmergable intervals(new interval should start here)
+            {
+                result.add(new int[]{start,end});  //since we got new starting time, we put the 'till now merged' intervals into result
+                start = intervals[i][0];    //the start is updated with curr interval startnig time
+                end = intervals[i][1];  //curr interval's ending time
+            }
+        }  //we'll have all possible merged arrays except the last updated start,end
+        
+        
+        result.add(new int[]{start,end}) ;   //to add the last interval
+        //since we want an arr o/p
+        int[][] finalres = new int[result.size()][];
+        return result.toArray(finalres);    
+    }
+}

@@ -1,0 +1,21 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+        ListNode reversedListHead = reverseList(head.next);    //read notes sie. this is returned to us upwards. goes down down down...to bottom of the call stack; end of LL; to the last node. head points to the last node now.
+        //last 1 node: our base case: itself is a reversed list. this is returned. so, 2nd last element becomes the rlh now. it is also the head
+        head.next.next = head;  //1st loop: 2nd last element says "make my neighbor's next point to me(reversing link)"
+        head.next = null;   //i'll set my next to null. idk if i will be the last node to reverse
+        return reversedListHead ;
+    }
+}
+
+//after 1 link reversal, we have rlh and dont want to lose it. so return it upwards. this way we have rl's excluding itself at each node 

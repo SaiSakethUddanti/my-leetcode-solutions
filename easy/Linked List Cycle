@@ -1,0 +1,60 @@
+class Solution
+{
+    
+    public int searchInsert(int[] nums, int target) {
+        
+        int start = 0, end = nums.length-1;
+        
+        while(start<=end){
+            
+            int mid = (start+end)/2;
+            
+            if(nums[mid]==target) return mid;
+            
+            if(nums[mid]>target) end = mid-1;
+            else start = mid+1/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        
+        if(fast==null || slow==null) //if head is null 
+            return false;
+        
+        while(fast!=null && fast.next!=null)    //fast moves 2. so fast's next cant be null
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+            
+            if(slow==fast)
+                break; 
+        }
+        //there's no cycle if fast or its next reaches null.
+        if(fast==null||fast.next==null)
+            return false;
+        
+        //else, it means you found a cycle where you broke the loop. so return true
+        return true;
+}
+}
+            
+        }
+        
+        return start;
+        
+        
+    }
+        
+
+    }         
+            
